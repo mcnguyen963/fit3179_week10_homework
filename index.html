@@ -37,17 +37,6 @@
     </div>
 
     <script>
-      const yearParam = {
-        name: "Year_selection",
-        value: 2019,
-        bind: {
-          input: "range",
-          min: 2019,
-          max: 2023,
-          step: 1,
-          name: "Year:  ",
-        },
-      };
       const spec = {
         $schema: "https://vega.github.io/schema/vega-lite/v5.json",
         width: 800,
@@ -65,7 +54,17 @@
               name: "Month: ",
             },
           },
-          yearParam,
+          {
+            name: "Year_selection",
+            value: 2019,
+            bind: {
+              input: "range",
+              min: 2019,
+              max: 2023,
+              step: 1,
+              name: "Year:  ",
+            },
+          },
           {
             name: "zoom_level",
             value: 30000,
@@ -349,8 +348,8 @@
             },
             transform: [
               {
-                filter: "datum.year == Year_selection",
-                filter: "datum.month == month_selection",
+                filter:
+                  "datum.year == Year_selection && datum.month == month_selection",
               },
             ],
             mark: "circle",
