@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.30.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.20.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.26.0"></script>
+  </head>
+  <body>
+    <div style="text-align: center">
+      <h1>Australia temperature station record °C (2019-2023)</h1>
+    </div>
+    <div
+      style="
+        margin: auto;
+        width: 100%;
+        padding: auto;
+        text-align: center;
+        padding-left: 10%;
+      "
+    >
+      <div style="display: flex">
+        <div>
+          <h2>
+            Geographical Distribution of Data Recording Centers in Australia °C
+            - (2019-2023)
+          </h2>
+          <div id="vis"></div>
+        </div>
+        <div>
+          <h2>Temperature Trends in Australia °C - (2019-2023)</h2>
+          <div id="vis2"></div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align: center">
+      Data is created by Huynh Phuc Nguyen Nguyen
+    </div>
+
+    <script>
+      const yearParam = {
+        name: "Year_selection",
+        value: 2019,
+        bind: {
+          input: "range",
+          min: 2019,
+          max: 2023,
+          step: 1,
+          name: "Year:  ",
+        },
+      };
+      const spec = {
+        $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+        title: "Temperature Station Record in Australia 2019-2023",
+        width: 800,
+        height: 500,
+
+        params: [
+          {
+            name: "month_selection",
+            value: 1,
+            bind: {
+              input: "range",
+              min: 1,
+              max: 12,
+              step: 1,
+              name: "Month: ",
+            },
+          },
+          yearParam,
+          {
+            name: "zoom_level",
+            value: 30000,
+            bind: {
+              input: "range",
+              min: 1000,
+              max: 60000,
+              step: 100,
+              name: "Zoom: ",
+            },
+          },
+          {
+            name: "center_to",
+            value: [138.58, -34.93],
+            bind: {
+              input: "select",
+              options: [
+                [138.58, -34.93],
+                [117.82, -34.94],
+                [133.89, -23.8],
+                [152.71, -27.63],
+                [145.29, -23.55],
+                [149.56, -33.43],
+                [139.35, -25.9],
+                [139.9, -22.91],
+                [145.95, -30.04],
+                [116.13, -33.95],
+                [153.13, -27.39],
+                [122.24, -17.95],
+                [152.32, -24.91],
+                [139.54, -17.75],
+                [146.28, -42.28],
+                [148.38, -35.94],
+                [145.75, -16.87],
+                [138.12, -19.92],
+                [149.2, -35.31],
+                [136.6, -35.75],
+                [147.14, -43.49],
+                [115.14, -34.37],
+                [153.47, -27.03],
+                [143.51, -38.86],
+                [113.67, -24.89],
+                [133.7, -32.13],
+                [146.26, -26.41],
+                [146.27, -20.05],
+                [145.83, -31.48],
+                [153.12, -30.32],
+                [117.22, -31.62],
+                [116.67, -30.28],
+                [130.89, -12.42],
+                [144.95, -35.56],
+                [148.58, -32.22],
+                [121.89, -33.83],
+                [128.9, -31.68],
+                [128.11, -30.85],
+                [149.92, -37.57],
+                [151.62, -25.62],
+                [143.53, -18.3],
+                [114.7, -28.8],
+                [128.3, -25.03],
+                [147.08, -42.98],
+                [150.27, -31.03],
+                [127.67, -18.23],
+                [147.33, -42.89],
+                [142.29, -10.58],
+                [151.11, -29.78],
+                [121.45, -30.78],
+                [126.65, -14.3],
+                [118.45, -22.3],
+                [117.61, -33.69],
+                [143.92, -35.72],
+                [135.55, -33.13],
+                [148.35, -40.99],
+                [147.22, -41.55],
+                [144.76, -37.86],
+                [114.1, -22.24],
+                [144.28, -23.44],
+                [146.79, -41.05],
+                [149.22, -21.12],
+                [119.75, -21.18],
+                [138.07, -29.66],
+                [118.54, -26.61],
+                [144.98, -37.83],
+                [118.28, -31.48],
+                [142.09, -34.24],
+                [150.18, -26.66],
+                [116.02, -29.2],
+                [149.85, -29.49],
+                [150.15, -35.91],
+                [140.77, -37.75],
+                [141.65, -36.31],
+                [141.07, -17.69],
+                [150.54, -34.95],
+                [139.01, -34.48],
+                [135.45, -27.56],
+                [148.47, -37.69],
+                [144.08, -16],
+                [115.98, -31.93],
+                [150.8, -35.09],
+                [118.63, -20.37],
+                [135.88, -34.6],
+                [152.87, -31.43],
+                [130.01, -20.18],
+                [150.78, -33.6],
+                [143.11, -20.7],
+                [139.76, -37.16],
+                [150.48, -23.38],
+                [146.51, -36.1],
+                [147.13, -38.12],
+                [150.83, -32.03],
+                [138.22, -33.77],
+                [148.6, -28.05],
+                [151.2, -33.86],
+                [134.58, -30.71],
+                [134.18, -19.64],
+                [143.82, -27.99],
+                [142.06, -29.44],
+                [146.77, -19.25],
+                [131.01, -16.4],
+                [147.46, -35.16],
+                [148.12, -30.04],
+                [116.67, -32.67],
+                [141.92, -12.68],
+                [147.2, -33.94],
+                [143.39, -31.52],
+                [151.84, -32.79],
+                [146.42, -39.13],
+                [136.81, -31.16],
+                [153.36, -29.43],
+              ],
+              labels: [
+                "Adelaide",
+                "Albany",
+                "Alice Springs",
+                "Amberley",
+                "Barcaldine",
+                "Bathurst",
+                "Birdsville",
+                "Boulia",
+                "Bourke",
+                "Bridgetown",
+                "Brisbane Airport",
+                "Broome",
+                "Bundaberg",
+                "Burketown",
+                "Butlers Gorge",
+                "Cabramurra",
+                "Cairns",
+                "Camooweal",
+                "Canberra",
+                "Cape Borda",
+                "Cape Bruny",
+                "Cape Leeuwin",
+                "Cape Moreton",
+                "Cape Otway",
+                "Carnarvon",
+                "Ceduna",
+                "Charleville",
+                "Charters Towers",
+                "Cobar",
+                "Coffs Harbour",
+                "Cunderdin",
+                "Dalwallinu",
+                "Darwin",
+                "Deniliquin",
+                "Dubbo",
+                "Esperance",
+                "Eucla",
+                "Forrest",
+                "Gabo Island",
+                "Gayndah",
+                "Georgetown",
+                "Geraldton",
+                "Giles",
+                "Grove",
+                "Gunnedah",
+                "Halls Creek",
+                "Hobart",
+                "Horn Island",
+                "Inverell",
+                "Kalgoorlie-Boulder",
+                "Kalumburu",
+                "Karijini North (Wittenoom)",
+                "Katanning",
+                "Kerang",
+                "Kyancutta",
+                "Larapuna (Eddystone Point)",
+                "Launceston Airport",
+                "Laverton",
+                "Learmonth",
+                "Longreach",
+                "Low Head",
+                "Mackay",
+                "Marble Bar",
+                "Marree",
+                "Meekatharra",
+                "Melbourne",
+                "Merredin",
+                "Mildura",
+                "Miles",
+                "Morawa",
+                "Moree",
+                "Moruya Heads",
+                "Mount Gambier",
+                "Nhill",
+                "Normanton",
+                "Nowra",
+                "Nuriootpa",
+                "Oodnadatta",
+                "Orbost",
+                "Palmerville",
+                "Perth Airport",
+                "Point Perpendicular",
+                "Port Hedland",
+                "Port Lincoln",
+                "Port Macquarie",
+                "Rabbit Flat",
+                "Richmond (NSW)",
+                "Richmond (Qld)",
+                "Robe",
+                "Rockhampton",
+                "Rutherglen",
+                "Sale",
+                "Scone",
+                "Snowtown",
+                "St George",
+                "Sydney",
+                "Tarcoola",
+                "Tennant Creek",
+                "Thargomindah",
+                "Tibooburra",
+                "Townsville",
+                "Victoria River Downs",
+                "Wagga Wagga",
+                "Walgett",
+                "Wandering",
+                "Weipa",
+                "West Wyalong",
+                "Wilcannia",
+                "Williamtown",
+                "Wilsons Promontory",
+                "Woomera",
+                "Yamba",
+              ],
+              name: "Map Centre: ",
+            },
+          },
+        ],
+        projection: {
+          type: "equirectangular",
+          center: { expr: "center_to" },
+          scale: { expr: "zoom_level" },
+        },
+        layer: [
+          {
+            data: {
+              url: "./data/auss.json",
+              format: {
+                type: "topojson",
+                feature: "austates",
+              },
+            },
+            transform: [
+              {
+                calculate:
+                  "'Data is not available in ' + datum.properties.NAME",
+                as: "note",
+              },
+            ],
+            mark: {
+              type: "geoshape",
+              fill: "#ddd",
+              stroke: "white",
+              strokeWidth: 1,
+            },
+            encoding: { tooltip: { field: "note" } },
+          },
+          {
+            data: {
+              url: "./data/data.csv",
+            },
+            transform: [
+              {
+                filter: "datum.year == Year_selection",
+                filter: "datum.month == month_selection",
+              },
+            ],
+            mark: "circle",
+            encoding: {
+              longitude: { field: "Longitude", type: "quantitative" },
+              latitude: { field: "Latitude", type: "quantitative" },
+              size: { value: 3000 },
+
+              color: {
+                field: "temperature",
+                type: "quantitative",
+                scale: { scheme: "reds" },
+                legend: { format: ".2s" },
+              },
+              tooltip: [
+                { field: "name", type: "nominal", title: "Suburb" },
+                {
+                  field: "number",
+                  aggregate: "mean",
+                  type: "quantitative",
+                  title: "Median Temperature",
+                  format: ",",
+                },
+                { field: "month", type: "quantitative", title: "Month" },
+                { field: "year", type: "quantitative", title: "Year" },
+              ],
+            },
+          },
+        ],
+        config: {},
+      };
+
+      vegaEmbed("#vis", spec, { mode: "vega-lite" })
+        .then(console.log)
+        .catch(console.warn);
+
+      const spec2 = {
+        $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+        params: [
+          {
+            name: "year_selected",
+            value: 2019,
+            bind: {
+              input: "range",
+              min: 2019,
+              max: 2023,
+              step: 1,
+              name: "Year:  ",
+            },
+          },
+        ],
+        data: { url: "./data/data.csv" },
+        transform: [{ filter: "datum.year == year_selected" }],
+        mark: "line",
+        width: 800, // Specify width
+        height: 500, // Specify height
+        encoding: {
+          x: { field: "month", timeUnit: "month" }, // Use temporal for date
+          y: {
+            field: "temperature",
+            type: "quantitative",
+            aggregate: "mean",
+            title: "Mean of temperature per day (°C)",
+          },
+        },
+      };
+
+      vegaEmbed("#vis2", spec2, { mode: "vega-lite" })
+        .then(console.log)
+        .catch(console.warn);
+    </script>
+  </body>
+</html>
