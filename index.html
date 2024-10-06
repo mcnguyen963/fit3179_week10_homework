@@ -50,7 +50,6 @@
       };
       const spec = {
         $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-        title: "Temperature Station Record in Australia 2019-2023",
         width: 800,
         height: 500,
 
@@ -363,6 +362,8 @@
               color: {
                 field: "temperature",
                 type: "quantitative",
+                title: "Temperature (°C)",
+
                 scale: { scheme: "reds" },
                 legend: { format: ".2s" },
               },
